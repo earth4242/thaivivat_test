@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parking System</title>
+</head>
+<style>
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+ul li::before {
+  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: white; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
+</style>
+<body background='http://localhost:3000/bg.jpg'>
+  <div class="container">
+    <h1><font color="white">Thaivivat BackEnd Test</font></h1>
+    <p><font color="white">Parking System API</font></p>
+    <ul>
+      <li>
+        <font color="white">Create Parking lot | How many parking lot you have ? </font>
+        <input type="Text" id="platnumber" maxlength="25" size="5"/>
+        <input type='button' onclick="location.href='/parking/setup?type=createlot&lotsize='+ document.getElementById('platnumber').value ;" value='GO'>
+      </li>
+      <li>
+        <font color="white">Park The Car | Plat Number </font>
+        <input type="Text" id="platnumber1" maxlength="25" size="5"/>
+        <font color="white"> | Size </font>
+        <select name="sizeselect" id="size">
+          <option value="small">Small</option>
+          <option value="medium">Medium </option>
+          <option value="large">Large</option>
+        </select>
+        <input type='button' onclick="location.href='/parking/setup?type=parkslot&platnumber='+ document.getElementById('platnumber1').value+'&carsize='+ document.getElementById('size').value ;" value='GO'>
+      </li>
+      <li>
+        <font color="white">Leave The Slot | Plat Number </font>
+        <input type="Text" id="platnumber2" maxlength="25" size="5"/>
+        <input type='button' onclick="location.href='/parking/setup?type=leaveslot&platnumber='+ document.getElementById('platnumber2').value ;" value='GO'>
+      </li>
+      <li>
+        <font color="white">Get Parking Status </font>
+        <input type='button' onclick="location.href='/parking/getstatus?type=parkinglot';" value='GO'>
+      </li>
+      <li>
+        <font color="white">Get Registration List (by carsize) | Size </font>
+        <select name="registsizeselect" id="registsize">
+          <option value="all">All</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium </option>
+          <option value="large">Large</option>
+        </select>
+        <input type='button' onclick="location.href='/parking/getstatus?type=regist&carsize=' + document.getElementById('registsize').value ;" value='GO'>
+      </li>
+      <li>
+        <font color="white">Get Allocated Slot (by carsize) | Size </font>
+        <select name="allocatesizeselect" id="allocatesize">
+          <option value="all">All</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium </option>
+          <option value="large">Large</option>
+        </select>
+        <input type='button' onclick="location.href='/parking/getstatus?type=allocate&carsize=' + document.getElementById('allocatesize').value ;" value='GO'>
+      </li>
+      <li>
+        <font color="white">Reset System </font>
+        <input type='button' onclick="location.href='/parking/setup?type=reset';" value='GO'>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
