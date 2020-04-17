@@ -4,8 +4,6 @@ services:
     container_name: parking_node
     restart: always
     build: .
-    volumes:
-     - ./parking_system:/parkingapp
     ports:
       - '3000:3000'
     links:
