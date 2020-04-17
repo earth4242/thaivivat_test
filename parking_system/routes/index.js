@@ -35,7 +35,7 @@ router.get('/setup', async function(req, res, next) {
           let lotsize = Number(req.query.lotsize);
           //var getlist = await Parking_status.find({}).$where('this.slot > 2')
           let getlotsize = await Parking_status.findOne({ parking_date : nowdate });
-          if(lotsize>Number(getlotsize.lastedslot)){
+          if(lotsize>=Number(getlotsize.lastedslot)){
             await Parking_status.findOneAndUpdate({ parking_date : nowdate },{ lotsize : lotsize });
             res.json({ status : "Create Success" });
           }else{
@@ -100,7 +100,12 @@ router.get('/setup', async function(req, res, next) {
             await Parking_slot.findOneAndUpdate({ platnumber : platnumber , status : 0 },{ status : 1 , exit_time : thistime });
             let getexit = await Parking_status.findOne({ parking_date : nowdate });
             let amount = Number(getexit.exit_amount)+1;
-            await Parking_status.findOneAndUpdate({ parking_date : nowdate },{ exit_amount : amount });
+
+            let getlot = await Parking_slot.findOne({ parking_date : { '$gte': nowdate , '$lt': nextdate },status : 0 }).sort({ slot : -1 });
+            var lot=0;
+            if(getlot != null) lot = Number(getlot.slot);
+
+            await Parking_status.findOneAndUpdate({ parking_date : nowdate },{ lastedslot : lot , exit_amount : amount });
             res.json({ status : "Leave Success" });
           }else{
             res.json({ status : "Please Entry Before" });
