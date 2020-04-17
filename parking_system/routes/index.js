@@ -25,7 +25,6 @@ async function gettime() {
   return format('yyyy-MM-dd hh:mm:ss', new Date());
 }
 
-/* GET home page. */
 router.get('/setup', async function(req, res, next) {
   if(req.query.type){
     var type = req.query.type;
@@ -33,7 +32,6 @@ router.get('/setup', async function(req, res, next) {
       async function createlot() {
         if(Number(req.query.lotsize)){
           let lotsize = Number(req.query.lotsize);
-          //var getlist = await Parking_status.find({}).$where('this.slot > 2')
           let getlotsize = await Parking_status.findOne({ parking_date : nowdate });
           if(lotsize>=Number(getlotsize.lastedslot)){
             await Parking_status.findOneAndUpdate({ parking_date : nowdate },{ lotsize : lotsize });
